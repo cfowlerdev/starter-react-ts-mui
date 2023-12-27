@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { DefaultLayout } from '../components/layout/DefaultLayout';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export interface IAppRoute extends NonIndexRouteObject {
   children?: Array<IAppRoute>;
@@ -18,6 +19,21 @@ export interface IAppRoute extends NonIndexRouteObject {
 }
 
 export const routes: Array<IAppRoute> = [
+  {
+    path: '/dashboard',
+    async lazy() {
+      const { Dashboard } = await import('./dashboard');
+      return {
+        Component: Dashboard
+      };
+    },
+    meta: {
+      label: 'Dashboard',
+      icon: <DashboardIcon />,
+      addToSidenav: true
+    }
+  },
+
   {
     path: '/todos',
     async lazy() {
