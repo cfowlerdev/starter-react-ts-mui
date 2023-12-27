@@ -11,8 +11,9 @@ import { NavLink } from 'react-router-dom';
 
 interface ISidenavItemProps {
   icon: React.ReactElement;
-  label: string;
+  label?: string;
   link?: string;
+  open: boolean;
 }
 
 const StyledListItem = styled(ListItem, {
@@ -28,28 +29,34 @@ const StyledListItem = styled(ListItem, {
   }
 }));
 
-const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
-  minWidth: 0,
-  justifyContent: 'center',
-  color: theme.palette.common.white
-}));
-
 export const SidenavItem: React.FC<ISidenavItemProps> = ({
   link,
   icon,
-  label
+  label,
+  open
 }) => {
   const Icon = () => (
     <Tooltip title={label} placement="left">
       <ListItemButton
-        sx={{ minHeight: 50, height: 50, justifyContent: 'center', px: 2.5 }}
+        sx={{
+          minHeight: 50,
+          height: 50,
+          px: 2.5,
+          justifyContent: open ? 'initial' : 'center'
+        }}
       >
-        <StyledListItemIcon>{icon}</StyledListItemIcon>
-        <ListItemText primary={label} sx={{ ml: 2 }} />
+        <ListItemIcon
+          sx={{ mr: open ? 3 : 'auto', minWidth: 0, justifyContent: 'center' }}
+        >
+          {icon}
+        </ListItemIcon>
+        {label && (
+          <ListItemText primary={label} sx={{ opacity: open ? 1 : 0 }} />
+        )}
       </ListItemButton>
     </Tooltip>
   );
-  return (
+  return link ? (
     <StyledListItem
       // @ts-expect-error Doesn't seem to like custom component as component
       component={NavLink}
@@ -57,6 +64,10 @@ export const SidenavItem: React.FC<ISidenavItemProps> = ({
       activeClassName="Mui-selected"
       disablePadding
     >
+      <Icon />
+    </StyledListItem>
+  ) : (
+    <StyledListItem disablePadding>
       <Icon />
     </StyledListItem>
   );
