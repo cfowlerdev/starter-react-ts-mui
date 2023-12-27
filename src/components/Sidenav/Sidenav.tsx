@@ -1,19 +1,11 @@
 import * as React from 'react';
-import { Drawer, List, styled } from '@mui/material';
+import { Box, Drawer, List, Toolbar } from '@mui/material';
 import { SidenavItem } from './SidenavItem';
 import { IAppRoute } from '../../routes';
 
 interface IProps {
   routes?: Array<IAppRoute>;
 }
-
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  width: 60,
-  flexShrink: 0,
-  overflowX: 'hidden',
-  boxSizing: 'border-box',
-  borderWidth: 0
-}));
 
 export const Sidenav: React.FC<IProps> = ({ routes }) => {
   const sideNavRoutes = routes
@@ -43,8 +35,18 @@ export const Sidenav: React.FC<IProps> = ({ routes }) => {
     : [];
 
   return (
-    <StyledDrawer variant="permanent" anchor="left" color="primary">
-      <List sx={{ mt: 6 }}>{sideNavRoutes}</List>
-    </StyledDrawer>
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' }
+      }}
+    >
+      <Toolbar variant="dense" />
+      <Box sx={{ overflow: 'auto' }}>
+        <List>{sideNavRoutes}</List>
+      </Box>
+    </Drawer>
   );
 };

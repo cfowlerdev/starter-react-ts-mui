@@ -1,25 +1,22 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { styled } from '@mui/material';
+import { Box } from '@mui/material';
 import { Sidenav } from '../Sidenav/Sidenav';
 import { IAppRoute } from '../../routes';
+import { Navbar } from '../Navbar';
 
 interface IProps {
   routes?: Array<IAppRoute>;
 }
 
-const Main = styled('main')(() => ({
-  display: 'flex',
-  flexGrow: 1
-}));
-
 export const DefaultLayout: React.FC<IProps> = ({ routes }) => {
   return (
     <>
+      <Navbar />
       <Sidenav routes={routes} />
-      <Main>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Outlet />
-      </Main>
+      </Box>
     </>
   );
 };

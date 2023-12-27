@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ListItem,
   ListItemButton,
@@ -6,7 +7,6 @@ import {
   Tooltip,
   styled
 } from '@mui/material';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface ISidenavItemProps {
@@ -34,18 +34,6 @@ const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
   color: theme.palette.common.white
 }));
 
-const StyledListItemButton = styled(ListItemButton)(() => ({
-  minHeight: 50,
-  height: 50,
-  justifyContent: 'center',
-  px: 2.5
-}));
-
-const StyledListItemText = styled(ListItemText)(() => ({
-  marginLeft: 0,
-  opacity: 0
-}));
-
 export const SidenavItem: React.FC<ISidenavItemProps> = ({
   link,
   icon,
@@ -53,14 +41,17 @@ export const SidenavItem: React.FC<ISidenavItemProps> = ({
 }) => {
   const Icon = () => (
     <Tooltip title={label} placement="left">
-      <StyledListItemButton>
+      <ListItemButton
+        sx={{ minHeight: 50, height: 50, justifyContent: 'center', px: 2.5 }}
+      >
         <StyledListItemIcon>{icon}</StyledListItemIcon>
-        <StyledListItemText primary={label} />
-      </StyledListItemButton>
+        <ListItemText primary={label} sx={{ ml: 2 }} />
+      </ListItemButton>
     </Tooltip>
   );
   return (
     <StyledListItem
+      // @ts-expect-error Doesn't seem to like custom component as component
       component={NavLink}
       to={link}
       activeClassName="Mui-selected"
