@@ -1,12 +1,4 @@
-import { rest } from 'msw';
+import { handlers as todoHandlers } from './todos/handlers';
 
-export const handlers = [
-  rest.get('/api/v1/todos', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        message: 'argh!'
-      })
-    );
-  })
-];
+export const handlers = [...todoHandlers];
+
